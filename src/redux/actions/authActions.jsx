@@ -22,11 +22,13 @@ export const login = (credentials) => async (dispatch) => {
         };
 
         // Use the cookies instance to set cookies
-        cookies.set("jwtToken", token, { secure: true, sameSite: "Strict" });
+        cookies.set("jwtToken", token, {path: '/', secure: import.meta.env.VITE_APP_ENV==="production", sameSite: "Strict" });
         cookies.set("user", JSON.stringify(setUser), {
-            secure: true,
+            path: '/',
+            secure: import.meta.env.VITE_APP_ENV==="production",
             sameSite: "Strict",
         });
+        debugger;
 
         dispatch(loginSuccess({ user: setUser, token }));
     } catch (error) {

@@ -17,12 +17,12 @@ import "../public/css/app.css";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <MantineProvider>
       <Provider store={store}>
-        <App />
-        </Provider>,
-      </MantineProvider>
-    </QueryClientProvider>
+        <QueryClientProvider client={queryClient}>
+          <MantineProvider>
+            <App />
+          </MantineProvider>
+        </QueryClientProvider>
+      </Provider>
   </StrictMode>
 );

@@ -20,7 +20,7 @@ export default defineConfig({
   plugins: [react()],
   base: './',
   build: {
-    outDir: '../public/test/', 
+    outDir: '../platform/',
     emptyOutDir: true, 
   },
   server: {

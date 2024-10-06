@@ -1,5 +1,7 @@
 import PropTypes from "prop-types";
 import Icons from "../../public";
+import iconImage from "../../public/images/icons/layericons.png";
+import iconLock from "../../public/images/icons/lockicons.svg";
 
 function CardCoursesPages({
   key,
@@ -34,7 +36,7 @@ function CardCoursesPages({
               <div className="indicators-percent-top">
                 <span>80% to completed</span>
                 <span className="views">
-                  <img src="/images/icons/layericons.png" alt="" />
+                  <img src={iconImage} alt="" />
                   {views}
                 </span>
               </div>
@@ -57,7 +59,7 @@ function CardCoursesPages({
         {status == "Locked" ? (
           <span className="status px-[16px] py-[39px] flex items-center justify-end">
             <img
-              src="/images/icons/lockicons.svg"
+              src={iconLock}
               alt=""
               className="w-14 h-14"
             />
