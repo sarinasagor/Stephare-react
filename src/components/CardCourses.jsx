@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import mortarImg from '../../public/images/icons/mortar.svg';
 
 function CardCourses({
   className,
@@ -32,7 +33,7 @@ function CardCourses({
               <li>
                 <span>{views}</span>
                 <img
-                  src="../../public/images/icons/mortar.svg"
+                  src={mortarImg}
                   alt=""
                   className="w-[24px] h-[24px]"
                 />

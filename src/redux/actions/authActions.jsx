@@ -28,7 +28,6 @@ export const login = (credentials) => async (dispatch) => {
             secure: import.meta.env.VITE_APP_ENV==="production",
             sameSite: "Strict",
         });
-        debugger;
 
         dispatch(loginSuccess({ user: setUser, token }));
     } catch (error) {

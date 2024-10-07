@@ -27,8 +27,10 @@ export default function Course() {
   const { data: courseDetailsResponse, isLoading: isGettingCourseDetails } =
     useQuery({
       queryKey: ["course-details", `id=${courseId}`],
-      queryFn: () => apiService.get(`/ldlms/v2/sfwd-courses/${courseId}`),
+      queryFn: () => apiService.get(`/ldlms/v2/sfwd-coursesdd/${courseId}`),
     });
+
+  //debugger;
 
   const courseDetails = courseDetailsResponse?.data;
 
@@ -39,7 +41,7 @@ export default function Course() {
       label: decode(value?.title?.rendered || ""),
       time: "1 Hour 24 Minutes",
       views: 8,
-      image: "../../public/images/mycourses/1.png",
+      image: "./images/mycourses/1.png",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
       status: "Scheduled",

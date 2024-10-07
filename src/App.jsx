@@ -62,7 +62,7 @@ function Layout() {
 
       {/* Render Navbar if not on signin */}
       <Routes>
-        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/" element={<Navigate to="/courses" />} />
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<ProtectedRoute><Dashboard/></ProtectedRoute>} />
         <Route path="/welcome" element={<ProtectedRoute><Welcome /></ProtectedRoute>} />
@@ -78,6 +78,7 @@ function Layout() {
         <Route path="/support" element={<ProtectedRoute><Support /></ProtectedRoute>} />
         <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="*" element={<Navigate to="Login" />} />
 
         {/* <Route path="/logout" element={<Logout />} /> */}
       </Routes>
