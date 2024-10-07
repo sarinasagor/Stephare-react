@@ -5,34 +5,47 @@ import Icons from "../../public/index.js";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 
-import { useDispatch } from "react-redux";
-import { login } from "../redux/actions/authActions.jsx";
+import { useDispatch, useSelector  } from "react-redux";
+import { login  } from "../redux/actions/authActions.jsx";
 
 function Login() {
     const [isPassword, setIsPassword] = useState(false);
+    const [loginError, setLoginError] = useState("");
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const errorMessage = useSelector((state) => state.auth.error);
 
-    const { register, handleSubmit } = useForm();
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm();
 
     const { mutate: signIn, isLoading } = useMutation({
         mutationFn: async ({ username, password }) => {
-            return await dispatch(login({ username, password }));
+            await dispatch(login({ username, password }));
+            navigate("/courses");
         },
         onSuccess: () => {
+            setLoginError("");
             navigate("/courses");
         },
         onError: (error) => {
-            console.error("Login failed from Login Page", error);
+            setLoginError(error.message || "Login failed. Please try again.");
         },
     });
 
     const handleLogin = handleSubmit((values) => {
+        setLoginError("");
         signIn({
             username: values.email,
             password: values.password,
         });
     });
+
+    function setisPassword(value) {
+        setIsPassword(value);
+    }
 
     return (
         <div className="signin-page">
@@ -58,6 +71,11 @@ function Login() {
                                         },
                                     })}
                                 />
+                                {errors.email && (
+                                    <span className="text-danger mt-2 ml-6">
+                                        {errors.email.message}
+                                    </span>
+                                )}
                                 <span className="input-icons">
                                     <i className="bi bi-person-circle"></i>
                                 </span>
@@ -78,6 +96,11 @@ function Login() {
                                         },
                                     })}
                                 />
+                                {errors.password && (
+                                    <span className="text-danger mt-2 ml-6">
+                                        {errors.password.message}
+                                    </span>
+                                )}
                                 <span
                                     className="input-icons show-password"
                                     onClick={() => setisPassword(!isPassword)}
@@ -92,10 +115,19 @@ function Login() {
                                 </span>
                             </div>
                         </div>
+
+                        {/* Display login error message */}
+                        {errorMessage && <p style={{ color: 'red', maxWidth:'300px' }}>{errorMessage}</p>} {/* Display the error message */}
+
                         {/* Add loading state here when loggin in */}
-                        <button type="submit" className="btn btn-signin">
-                            Sign In
+                        <button
+                            type="submit"
+                            className="btn btn-signin"
+                            disabled={isLoading}
+                        >
+                            {isLoading ? "Loading..." : "Signin"}
                         </button>
+                        {loginError && <p style={{ color: 'red',maxWidth:'300px' }}>{loginError}</p>}
                         <a href="#" className="forgot-password">
                             Forgot Password?
                         </a>

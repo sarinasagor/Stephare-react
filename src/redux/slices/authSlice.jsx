@@ -16,21 +16,29 @@ const authSlice = createSlice({
       state.isAuthenticated = true;
       state.user = action.payload.user;
       state.loading = false;
+      state.error = null;
     },
     logoutSuccess: (state) => {
       state.isAuthenticated = false;
       state.user = null;
       state.loading = false;
+      state.error = null;
       cookies.remove("jwtToken", { path: "/" });
       cookies.remove("user", { path: "/" });
     },
     authLoaded: (state) => {
       state.loading = false;
     },
+    setLoginError(state, action) {
+      state.error = action.payload;
+    },
+    clearLoginError(state) {
+      state.error = null;
+    },
   },
 });
 
-export const { loginSuccess, logoutSuccess, authLoaded } = authSlice.actions;
+export const { loginSuccess, logoutSuccess, authLoaded, setLoginError, clearLoginError  } = authSlice.actions;
 
 // Action to restore authentication from cookies
 export const restoreAuth = () => async (dispatch) => {

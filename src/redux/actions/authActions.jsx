@@ -1,4 +1,4 @@
-import { loginSuccess, logoutSuccess } from "../slices/authSlice";
+import { loginSuccess, logoutSuccess, setLoginError, clearLoginError  } from "../slices/authSlice";
 import { useApiService } from "../../hooks/axios";
 import { Cookies } from "react-cookie"; // Import Cookies directly
 
@@ -7,6 +7,7 @@ const cookies = new Cookies();
 
 // Login Action
 export const login = (credentials) => async (dispatch) => {
+    dispatch(clearLoginError());
     try {
         const apiService = useApiService();
         const response = await apiService.post(
@@ -31,12 +32,20 @@ export const login = (credentials) => async (dispatch) => {
 
         dispatch(loginSuccess({ user: setUser, token }));
     } catch (error) {
-        console.error(
-            "Login failed:",
-            error.response ? error.response.data : error.message
-        );
+        // console.error(
+        //     "Login failed:",
+        //     error.response ? error.response.data : error.message
+        // );
+
         cookies.remove("jwtToken");
         cookies.remove("user");
+
+        // Extract the message from the error response
+        const errorMessage = error.response && error.response.data && error.response.data.message
+            ? error.response.data.message
+            : error.message;
+
+        dispatch(setLoginError(errorMessage));
     }
 };
 
